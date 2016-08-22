@@ -32,7 +32,7 @@ public class PullToRefresh: NSObject {
     
     // MARK: - ScrollView & Observing
 
-    private var scrollViewDefaultInsets = UIEdgeInsets.zero
+    public var scrollViewDefaultInsets = UIEdgeInsets.zero
     weak var scrollView: UIScrollView? {
         willSet {
             removeScrollViewObserving()
@@ -93,9 +93,9 @@ public class PullToRefresh: NSObject {
     private let contentOffsetKeyPath = "contentOffset"
     private let contentInsetKeyPath = "contentInset"
     private let contentSizeKeyPath = "contentSize"
-    private var previousScrollViewOffset: CGPoint = CGPoint.zero
+    public var previousScrollViewOffset: CGPoint = CGPoint.zero
     
-    override public func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<()>?) {
+    public func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutableRawPointer) {
         if (context == &KVOContext && keyPath == contentOffsetKeyPath && object as? UIScrollView == scrollView) {
             var offset: CGFloat
             switch position {
@@ -140,7 +140,7 @@ public class PullToRefresh: NSObject {
         previousScrollViewOffset.y = scrollView?.contentOffset.y ?? 0
     }
     
-    private func addScrollViewObserving() {
+    public func addScrollViewObserving() {
         guard let scrollView = scrollView, !isObserving else {
             return
         }
@@ -152,7 +152,7 @@ public class PullToRefresh: NSObject {
         isObserving = true
     }
     
-    private func removeScrollViewObserving() {
+    public func removeScrollViewObserving() {
         guard let scrollView = scrollView, isObserving else {
             return
         }
@@ -248,6 +248,6 @@ private extension PullToRefresh {
 private extension PullToRefresh {
     
     func isCurrentlyVisible() -> Bool {
-        return self.scrollView?.contentOffset.y <= -self.scrollViewDefaultInsets.top
+        return (self.scrollView?.contentOffset.y)! <= -self.scrollViewDefaultInsets.top
     }
 }

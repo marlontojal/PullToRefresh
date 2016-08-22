@@ -33,7 +33,7 @@ public extension UIScrollView {
         }
     }
     
-    public func addPullToRefresh(_ pullToRefresh: PullToRefresh, action: () -> ()) {
+    public func addPullToRefresh(_ pullToRefresh: PullToRefresh, action: (() -> ())?) {
         pullToRefresh.scrollView = self
         pullToRefresh.action = action
         
