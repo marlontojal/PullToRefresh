@@ -13,7 +13,7 @@ public enum Position {
     case top, bottom
 }
 
-public class PullToRefresh: NSObject {
+open class PullToRefresh: NSObject {
     
     public var position: Position = .top
     
@@ -22,7 +22,7 @@ public class PullToRefresh: NSObject {
     public var springDamping: CGFloat = 0.4
     public var initialSpringVelocity: CGFloat = 0.8
     public var animationOptions: UIViewAnimationOptions = [.curveLinear]
-
+    
     let refreshView: UIView
     var action: (() -> ())?
     
@@ -31,7 +31,7 @@ public class PullToRefresh: NSObject {
     private let animator: RefreshViewAnimator
     
     // MARK: - ScrollView & Observing
-
+    
     public var scrollViewDefaultInsets = UIEdgeInsets.zero
     weak var scrollView: UIScrollView? {
         willSet {
@@ -63,7 +63,7 @@ public class PullToRefresh: NSObject {
                     scrollView?.contentInset = self.scrollViewDefaultInsets
                     state = .initial
                 }
-        
+                
             default: break
             }
         }
@@ -88,7 +88,7 @@ public class PullToRefresh: NSObject {
     }
     
     // MARK: KVO
-
+    
     private var KVOContext = "PullToRefreshKVOContext"
     private let contentOffsetKeyPath = "contentOffset"
     private let contentInsetKeyPath = "contentInset"
@@ -129,10 +129,10 @@ public class PullToRefresh: NSObject {
                 refreshView.frame = CGRect(x: 0, y: scrollView!.contentSize.height, width: scrollView!.bounds.width, height: refreshView.bounds.height)
             }
         } else if (context == &KVOContext && keyPath == contentInsetKeyPath && object as? UIScrollView == scrollView) {
-            if self.state == .Initial {
+            if self.state == .initial {
                 scrollViewDefaultInsets = scrollView!.contentInset
             }
-          
+            
         } else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
@@ -160,7 +160,7 @@ public class PullToRefresh: NSObject {
         scrollView.removeObserver(self, forKeyPath: contentOffsetKeyPath, context: &KVOContext)
         scrollView.removeObserver(self, forKeyPath: contentSizeKeyPath, context: &KVOContext)
         scrollView.removeObserver(self, forKeyPath: contentInsetKeyPath, context: &KVOContext)
-      
+        
         isObserving = false
     }
 }

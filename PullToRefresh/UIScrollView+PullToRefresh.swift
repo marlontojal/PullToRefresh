@@ -94,4 +94,20 @@ public extension UIScrollView {
             self.bottomPullToRefresh?.endRefreshing()
         }
     }
+    
+    public func startRefreshingTop() {
+        self.startRefreshing(at: .top)
+    }
+    
+    public func startRefreshingBottom() {
+        self.startRefreshing(at: .bottom)
+    }
+    
+    public func endRefreshingTop() {
+        self.endRefreshing(at: .top)
+    }
+    
+    public func endRefreshingBottom() {
+        self.endRefreshing(at: .bottom)
+    }
 }
