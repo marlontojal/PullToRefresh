@@ -95,7 +95,7 @@ open class PullToRefresh: NSObject {
     private let contentSizeKeyPath = "contentSize"
     public var previousScrollViewOffset: CGPoint = CGPoint.zero
     
-    public func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutableRawPointer) {
+    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if (context == &KVOContext && keyPath == contentOffsetKeyPath && object as? UIScrollView == scrollView) {
             var offset: CGFloat
             switch position {
@@ -138,6 +138,7 @@ open class PullToRefresh: NSObject {
         }
         
         previousScrollViewOffset.y = scrollView?.contentOffset.y ?? 0
+        
     }
     
     public func addScrollViewObserving() {
